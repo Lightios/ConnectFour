@@ -2,7 +2,6 @@ package ui
 
 import androidx.compose.runtime.*
 import org.jetbrains.compose.web.dom.*
-import org.jetbrains.compose.web.css.*
 import model.Cell
 
 @Composable

@@ -14,10 +14,13 @@ repositories {
 }
 
 kotlin {
+    jvm()
+
     js(IR) {
         browser()
         binaries.executable()
     }
+
     sourceSets {
         val jsMain by getting {
             kotlin.srcDir("src/main/kotlin")
@@ -25,7 +28,19 @@ kotlin {
 
             dependencies {
                 implementation(compose.html.core)
+            }
+        }
+
+        val commonMain by getting {
+            dependencies {
                 implementation(compose.runtime)
+            }
+        }
+
+
+        val commonTest by getting {
+            dependencies {
+                implementation(kotlin("test"))
             }
         }
     }
