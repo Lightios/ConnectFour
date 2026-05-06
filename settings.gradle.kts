@@ -11,4 +11,4 @@ pluginManagement {
     }
 }
 
-rootProject.name = "compose-multiplatform-html-library-template"
+rootProject.name = "ConnectFour"

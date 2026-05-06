@@ -4,25 +4,29 @@ import org.jetbrains.compose.web.dom.Div
 import org.jetbrains.compose.web.dom.Text
 import org.jetbrains.compose.web.renderComposable
 
-fun main() {
-    renderComposable(rootElementId = "root") {
-        Body()
-    }
-}
+import game.GameController
+import game.Screen
+import org.jetbrains.compose.web.css.Style
+import ui.AppStyleSheet
+import ui.ConfigScreen
+import ui.GameScreen
 
-@Composable
-fun Body() {
-    var counter by remember { mutableStateOf(0) }
-    Div {
-        Text("Clicked: ${counter}")
-    }
-    Button(
-        attrs = {
-            onClick { _ ->
-                counter++
-            }
+fun main() {
+    val controller = GameController()
+
+    renderComposable(rootElementId = "root") {
+        Style(AppStyleSheet)
+
+        when (controller.screen) {
+            is Screen.Config -> ConfigScreen(
+                onStart = { config -> controller.startGame(config) }
+            )
+            is Screen.Game -> GameScreen(
+                state = controller.state,
+                onColumnClick = { col -> controller.dropPiece(col) },
+                onReset = { controller.resetGame() },
+                onBack = { controller.goToConfig() }
+            )
         }
-    ) {
-        Text("Click")
     }
 }
