@@ -1,14 +1,16 @@
 import org.jetbrains.compose.web.renderComposable
 
-import game.GameController
+import game.GameViewModel
 import game.Screen
 import org.jetbrains.compose.web.css.Style
+import storage.GameStorageImpl
 import ui.AppStyleSheet
 import ui.ConfigScreen
 import ui.GameScreen
 
 fun main() {
-    val controller = GameController()
+    val gameStorage = GameStorageImpl()
+    val controller = GameViewModel(gameStorage)
 
     renderComposable(rootElementId = "root") {
         Style(AppStyleSheet)
