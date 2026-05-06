@@ -9,7 +9,7 @@ import kotlin.test.*
 
 class GameEngineTest {
 
-    private val default = GameConfig(rows = 6, cols = 7, winCondition = 4)
+    private val default = GameConfig()
 
     // ── Helpers ───────────────────────────────────────────────────────
 

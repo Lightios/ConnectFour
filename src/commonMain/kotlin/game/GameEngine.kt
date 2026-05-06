@@ -3,7 +3,6 @@ package game
 import model.*
 
 object GameEngine {
-
     fun createBoard(config: GameConfig): List<List<Cell>> =
         List(config.rows) { List(config.cols) { Cell.EMPTY } }
 
