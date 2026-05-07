@@ -17,6 +17,9 @@ Then open [localhost:8080](http://localhost:8080) in your browser.
 
 ---
 
+## Template
+Project forked from template: [JetBrains template](https://github.com/JetBrains/compose-multiplatform-html-library-template)
+
 ## Features
 
 - **Configurable board** — rows, columns, and win condition (connect N) are all set before each game via a config screen. Supported ranges: 4–20 rows/columns, connect 3–10.
