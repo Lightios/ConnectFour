@@ -13,14 +13,13 @@ fun Board(
     val winningCells = (state.status as? GameStatus.Won)?.winningCells ?: emptySet()
     val isPlaying = state.status == GameStatus.Playing
 
-    Div({ classes(AppStyleSheet.boardWrapper) }) {
+    val gridCols = "repeat(${state.config.cols}, minmax(0, 1fr))"
 
-        // ── Column hint strip ────────────────────────────────────────
-        // invisible clickable arrows above each column
+    Div({ classes(AppStyleSheet.boardWrapper) }) {
         Div({
             classes(AppStyleSheet.columnHints)
             style {
-                gridTemplateColumns("repeat(${state.config.cols}, 1fr)")
+                gridTemplateColumns(gridCols)
             }
         }) {
             for (col in 0 until state.config.cols) {
@@ -41,16 +40,9 @@ fun Board(
             }
         }
 
-        // ── Grid ─────────────────────────────────────────────────────
         Div({
             classes(AppStyleSheet.board)
-            style {
-                val cellSize = "min(calc((90vw - ${(state.config.cols + 1) * 4}px) / ${state.config.cols}), 64px)"
-                property("grid-template-columns",
-                    "repeat(${state.config.cols}, minmax(28px, 64px))"
-                )
-                property("grid-auto-rows", cellSize)
-            }
+            style { property("grid-template-columns", gridCols) }
         }) {
             for (row in 0 until state.config.rows) {
                 for (col in 0 until state.config.cols) {
