@@ -158,7 +158,7 @@ private fun GameOverBanner(
                         Text("Player ${playerLabel(status.player)} Wins!")
                     }
                     P({ classes(AppStyleSheet.subtitle) }) {
-                        Text("Connected ${(status as? GameStatus.Won)?.winningCells?.size ?: 4} in a row")
+                        Text("Connected ${status.winningCells.size} in a row")
                     }
                 }
 

@@ -4,7 +4,7 @@ import androidx.compose.runtime.*
 import model.*
 import storage.GameStorage
 
-class GameViewModel(
+class GameController(
     private val gameStorage: GameStorage,
 ) {
 
@@ -13,9 +13,11 @@ class GameViewModel(
     )
         private set
 
-    // if we restored a saved game, go straight to the game screen
-    var screen by mutableStateOf<Screen>(
-        if (gameStorage.load() != null) Screen.Game else Screen.Config
+    var screen by mutableStateOf(
+        if (gameStorage.load() != null)
+            Screen.Game
+        else
+            Screen.Config
     )
         private set
 
@@ -28,12 +30,12 @@ class GameViewModel(
     fun dropPiece(col: Int) {
         if (state.status != GameStatus.Playing) return
         state = GameEngine.dropPiece(state, col)
-        gameStorage.save(state)  // save after every move
+        gameStorage.save(state)
     }
 
     fun resetGame() {
         state = GameEngine.initialState(state.config)
-        gameStorage.clear()  // fresh game = clear storage
+        gameStorage.clear()
         screen = Screen.Game
     }
 
