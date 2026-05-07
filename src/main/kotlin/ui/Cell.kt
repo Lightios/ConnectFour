@@ -21,9 +21,6 @@ fun GameCell(
         if (animate) add(AppStyleSheet.dropAnimation)
     }
 
-
-    // key forces Compose to remount the element when a piece lands,
-    // which restarts the CSS animation from scratch
     key(animate, cell) {
         Div({
             classes(*classes.toTypedArray())

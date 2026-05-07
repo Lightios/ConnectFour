@@ -14,9 +14,7 @@ object AppStyleSheet : StyleSheet() {
         val border = Color("#e94560")
 
         val red = Color("#e94560")
-        val redGlow = Color("rgba(233, 69, 96, 0.4)")
         val yellow = Color("#f5a623")
-        val yellowGlow = Color("rgba(245, 166, 35, 0.4)")
 
         val cellEmpty = Color("#0a1628")
         val cellBorder = Color("#1e3a5f")
@@ -38,17 +36,8 @@ object AppStyleSheet : StyleSheet() {
         val radiusFull = 50.percent
 
         val shadowCard = "0 8px 32px rgba(0,0,0,0.4)"
-        val shadowGlow = { player: String ->
-            if (player == "red")
-                "0 0 16px rgba(233,69,96,0.5)"
-            else
-                "0 0 16px rgba(245,166,35,0.5)"
-        }
-//        val shadowGlow = (player: String) -> if (player == "red")
-//        "0 0 16px rgba(233,69,96,0.5)" else "0 0 16px rgba(245,166,35,0.5)"
     }
 
-    // ── Global reset ─────────────────────────────────────────────────
     init {
         "*, *::before, *::after" style {
             property("box-sizing", "border-box")
@@ -73,9 +62,14 @@ object AppStyleSheet : StyleSheet() {
             justifyContent(JustifyContent.Center)
             alignItems(AlignItems.Center)
         }
+
+        // hide default number input arrows on Chrome based browsers
+        "input::-webkit-outer-spin-button, input::-webkit-inner-spin-button" style {
+            property("-webkit-appearance", "none")
+            margin(0.px)
+        }
     }
 
-    // ── Layout ───────────────────────────────────────────────────────
     val screen by style {
         display(DisplayStyle.Flex)
         flexDirection(FlexDirection.Column)
@@ -118,7 +112,6 @@ object AppStyleSheet : StyleSheet() {
         fontWeight(600)
     }
 
-    // ── Form elements ────────────────────────────────────────────────
     val configForm by style {
         display(DisplayStyle.Flex)
         flexDirection(FlexDirection.Column)
@@ -144,12 +137,14 @@ object AppStyleSheet : StyleSheet() {
         property("outline", "none")
         property("transition", "border-color 0.2s")
 
+        // hide default number input arrows on Firefox
+        property("-moz-appearance", "textfield")
+
         self + focus style {
             border { color(Colors.border) }
         }
     }
 
-    // ── Buttons ──────────────────────────────────────────────────────
     val button by style {
         backgroundColor(Colors.buttonPrimary)
         color(Colors.textPrimary)
@@ -191,7 +186,6 @@ object AppStyleSheet : StyleSheet() {
         }
     }
 
-    // ── Status bar ───────────────────────────────────────────────────
     val statusBar by style {
         display(DisplayStyle.Flex)
         justifyContent(JustifyContent.SpaceBetween)
@@ -222,7 +216,6 @@ object AppStyleSheet : StyleSheet() {
         property("flex", "1")
     }
 
-    // ── Board ────────────────────────────────────────────────────────
     val boardWrapper by style {
         display(DisplayStyle.Flex)
         flexDirection(FlexDirection.Column)
@@ -232,9 +225,10 @@ object AppStyleSheet : StyleSheet() {
     }
 
     val columnHints by style {
-        display(DisplayStyle.Flex)
+        display(DisplayStyle.Grid)
         width(100.percent)
         gap(4.px)
+        padding(0.px, 12.px)
     }
 
     val columnHint by style {
@@ -252,23 +246,23 @@ object AppStyleSheet : StyleSheet() {
     }
 
     val board by style {
-        display(DisplayStyle.Grid)
-        gap(4.px)
-        backgroundColor(Colors.surfaceRaised)
-        borderRadius(Tokens.radiusMd)
-        padding(12.px)
-        property("box-shadow", Tokens.shadowCard)
-        width(100.percent)
-        justifyContent(JustifyContent.SpaceBetween)
+            display(DisplayStyle.Grid)
+            gap(4.px)
+            backgroundColor(Colors.surfaceRaised)
+            borderRadius(Tokens.radiusMd)
+            padding(12.px)
+            property("box-shadow", Tokens.shadowCard)
+            width(100.percent)
+            property("overflow", "hidden")
     }
 
-    // ── Cells ────────────────────────────────────────────────────────
     val cell by style {
         borderRadius(Tokens.radiusFull)
         property("aspect-ratio", "1")
         width(100.percent)
+        property("min-width", "0")
+        property("max-width", "100%")
         property("transition", "box-shadow 0.2s")
-
     }
 
     val cellEmpty by style {
@@ -292,8 +286,7 @@ object AppStyleSheet : StyleSheet() {
     }
 
     @OptIn(ExperimentalComposeWebApi::class)
-// Changed '=' to 'by' so the stylesheet can implicitly name the keyframe "fadeIn"
-    private val fadeIn by keyframes {
+    val fadeIn by keyframes {
         from {
             transform { translateY((-400).percent)}
             opacity(0.6)
@@ -304,7 +297,6 @@ object AppStyleSheet : StyleSheet() {
         }
     }
 
-    // ── Animations ───────────────────────────────────────────────────
     val dropAnimation by style {
         animation(keyframes = fadeIn) {
             duration(0.3.s)
@@ -312,8 +304,6 @@ object AppStyleSheet : StyleSheet() {
         }
     }
 
-
-    // ── Responsive ───────────────────────────────────────────────────
     init {
         media("(max-width: 600px)") {
             style {
